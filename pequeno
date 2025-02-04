@@ -6,7 +6,7 @@ getgenv().LUMIERE = {
         Enabled = true,
         Size = 20,
         Color = Color3.fromRGB(255, 175, 255), -- Roxo claro
-        Transparency = 0.2,
+        Transparency = 0.1,
     },
     Visuals = {
         Self = {
