@@ -1,0 +1,43 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Função para teletransportar o jogador para a posição
+local function teleportTo(position)
+    humanoidRootPart.CFrame = CFrame.new(position)
+end
+
+-- Posições
+local startPosition = Vector3.new(692.0795288085938, 1.1482691764831543, -145.53965759277344)  -- Posição de início da missão
+local moedas = {
+    Vector3.new(728.7408447265625, -29.701459884643555, -44.561683654785156),  -- Moeda 1
+    Vector3.new(907.2943115234375, 3.602515459060669, -333.47607421875),      -- Moeda 2
+    Vector3.new(752.1714477539062, 3.6025149822235107, -392.7427062988281),   -- Moeda 3
+    Vector3.new(389.20306396484375, 19.561464309692383, -368.56292724609375), -- Moeda 4
+    Vector3.new(476.40655517578125, 3.6525232791900635, -481.78509521484375), -- Moeda 5
+}
+
+-- Função para pegar a missão
+local function pegarMissao()
+    teleportTo(startPosition)  -- Vai para a posição inicial da missão
+    wait(2)  -- Espera 2 segundos para garantir que está no local certo
+    -- Aqui você pode adicionar o código para interagir com a missão, se necessário, ou executar qualquer outra ação
+end
+
+-- Função para coletar as moedas
+local function coletarMoedas()
+    for _, moeda in pairs(moedas) do
+        teleportTo(moeda)  -- Teleporta para a moeda
+        wait(4)  -- Atraso de 4 segundos entre cada teleporte
+    end
+end
+
+-- Função para entregar a missão (voltar ao ponto inicial após coletar as moedas)
+local function entregarMissao()
+    teleportTo(startPosition)  -- Volta para o local onde começa a missão
+end
+
+-- Chama as funções
+pegarMissao()
+coletarMoedas()
+entregarMissao()  -- Retorna ao local para entregar as moedas
