@@ -5,6 +5,29 @@
 local UserInputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
+local GuiService = game:GetService("GuiService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Tenta encontrar e desativar o script de notificação
+local pauseNotificationScript = ReplicatedStorage:FindFirstChild("GameplayPausedNotification")
+if pauseNotificationScript then
+    pauseNotificationScript:Destroy() -- Remove o script se encontrado
+end
+
+-- Função para remover notificações de pausa
+local function disablePauseNotification()
+    GuiService:SetGameplayPausedNotificationEnabled(false)
+    
+    -- Verifica se há alguma GUI de pausa e a remove
+    for _, gui in ipairs(playerGui:GetChildren()) do
+        if gui:IsA("ScreenGui") and gui.Name:find("Pause") then
+            gui:Destroy()
+        end
+    end
+end
+
+-- Desativar a notificação de pausa do gameplay
+disablePauseNotification()
 
 -- Variável para armazenar o estado da interface
 local isInterfaceVisible = true
@@ -28,3 +51,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         toggleScreen() -- Alterna a visibilidade da interface
     end
 end)
+
+-- Monitoramento contínuo para garantir que a notificação não apareça novamente
+game:GetService("RunService").RenderStepped:Connect(disablePauseNotification)
