@@ -1,0 +1,30 @@
+-- Script local para um jogo no Roblox
+-- Insira isso em um LocalScript em StarterPlayerScripts
+
+-- Serviços necessários
+local UserInputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Variável para armazenar o estado da interface
+local isInterfaceVisible = true
+
+-- Função para mostrar ou esconder a interface
+local function toggleScreen()
+    isInterfaceVisible = not isInterfaceVisible -- Alterna o estado (true/false)
+    
+    for _, gui in ipairs(playerGui:GetChildren()) do
+        if gui:IsA("ScreenGui") then
+            gui.Enabled = isInterfaceVisible
+        end
+    end
+end
+
+-- Captura quando a tecla 5 é pressionada
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end -- Ignorar se o evento já foi processado
+
+    if input.KeyCode == Enum.KeyCode.Five then
+        toggleScreen() -- Alterna a visibilidade da interface
+    end
+end)
